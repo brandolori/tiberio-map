@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useRef } from 'react';
 import './App.css';
+import useMousePosition from './useMousePosition';
+
+const styles: { [key: string]: React.CSSProperties } = {
+  map: {
+    width: "auto",
+    height: "80vh",
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+}
 
 function App() {
+
+  const mapRef = useRef<HTMLElement>()
+
+  const { clientX, clientY } = useMousePosition(mapRef)
+
+  const posX = Math.round(clientX * 760 * .56)
+  const posY = Math.round(clientY * 926 * .56)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      {/*@ts-ignore*/}
+      <img ref={mapRef} src="/ponte-sat.png" style={styles.map} className="App-logo" alt="logo" />
+
+      <p>
+        x: {posX}, z: {posY}
+      </p>
     </div>
   );
 }
